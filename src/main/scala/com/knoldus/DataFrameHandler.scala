@@ -1,25 +1,36 @@
 package com.knoldus
 
-import org.apache.spark.sql.SQLContext
+import org.apache.spark.sql.{DataFrame, SQLContext}
 import org.apache.spark.{SparkConf, SparkContext}
 
-/**
-  * Created by sangeeta on 22/2/17.
-  */
 object DataFrameHandler {
 
-  def main(args: Array[String]) {
-    System.out.println("Starting with the demo project")
+  def loadData(): DataFrame ={
+    println("Starting with the demo project")
     val conf = new SparkConf().setAppName("cardinality_demo").setMaster("local")
     val sc = new SparkContext(conf)
 
-      val sqlContext = new SQLContext(sc)
-      val df = sqlContext.read
-        .format("com.databricks.spark.csv")
-        .option("header", "false") // Use first line of all files as header
-        .option("inferSchema", "true") // Automatically infer data types
-        .load("src/main/resources/user.csv")
-      df.show()
-      df.printSchema()
-    }
+    val sqlContext = new SQLContext(sc)
+    val df: DataFrame = sqlContext.read
+      .format("com.databricks.spark.csv")
+      .option("header", "false") // Use first line of all files as header
+      .option("inferSchema", "true") // Automatically infer data types
+      .load("src/main/resources/user.csv")
+    df.show()
+    df.printSchema()
+    df
+  }
+
+
+  def main(args: Array[String]) {
+
+    val dataFrame = loadData()
+    val dataFrameUtil = new DataFrameUtil()
+
+    println("Column count of CSV is >>>>>> " + dataFrameUtil.getColumnHeaderCount(dataFrame))
+    println("Column names of CSV is >>>>>> " + dataFrameUtil.getColumnNames(dataFrame))
+
+    dataFrameUtil.processDataFrame(dataFrame)
+
+  }
 }
