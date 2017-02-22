@@ -9,14 +9,14 @@ import org.apache.spark.{SparkConf, SparkContext}
 object DataFrameHandler {
 
   def main(args: Array[String]) {
-    System.out.println("Staring with the demo project")
+    System.out.println("Starting with the demo project")
     val conf = new SparkConf().setAppName("cardinality_demo").setMaster("local")
     val sc = new SparkContext(conf)
 
       val sqlContext = new SQLContext(sc)
       val df = sqlContext.read
         .format("com.databricks.spark.csv")
-        .option("header", "true") // Use first line of all files as header
+        .option("header", "false") // Use first line of all files as header
         .option("inferSchema", "true") // Automatically infer data types
         .load("src/main/resources/user.csv")
       df.show()
