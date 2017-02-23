@@ -15,12 +15,11 @@ object DataFrameHandler {
       .format("com.databricks.spark.csv")
       .option("header", "false") // Use first line of all files as header
       .option("inferSchema", "true") // Automatically infer data types
-      .load("src/main/resources/user.csv")
+      .load("src/main/resources/2000_UniqData.csv")
     df.show()
     df.printSchema()
     df
   }
-
 
   def main(args: Array[String]) {
 
@@ -29,7 +28,7 @@ object DataFrameHandler {
 
     println("Column count of CSV is >>>>>> " + dataFrameUtil.getColumnHeaderCount(dataFrame))
     println("Column names of CSV is >>>>>> " + dataFrameUtil.getColumnNames(dataFrame))
-
+    println("Column data types of CSV is >>>>>> " + dataFrameUtil.getColumnDataTypes(dataFrame))
     dataFrameUtil.processDataFrame(dataFrame)
 
   }
