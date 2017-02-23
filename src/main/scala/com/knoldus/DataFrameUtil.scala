@@ -1,7 +1,8 @@
 package com.knoldus
 
+
 import org.apache.spark.sql.DataFrame
-import org.apache.spark.sql.types.DataType
+import org.apache.spark.sql.types.{DataType, StringType}
 
 case class CsvHeaderSchema(columnName: String, dataType: DataType, isNullable: Boolean)
 
@@ -21,15 +22,5 @@ class DataFrameUtil {
   }
 
   def getColumnHeaderCount(dataFrame: DataFrame) = dataFrame.columns.length
-
-  def processDataFrame(dataframe: DataFrame): Unit = {
-    val cardinalityProcessor = new CardinalityProcessor()
-    println("processing DataFrame")
-
-    getColumnNames(dataframe) map { colName =>
-      dataframe.select(colName).show()
-      cardinalityProcessor.computeCardinality(colName, dataframe.select(colName))
-    }
-  }
 
 }

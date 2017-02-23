@@ -23,7 +23,7 @@ projectFilesBackup*
 /db
 /modules
 /target
-
+target/
 /logs/
 /dist/
 /.idea
